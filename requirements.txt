@@ -4,3 +4,4 @@ numpy>=1.26
 plotly>=5.22
 sktime>=0.30
 scikit-learn>=1.5
+pmdarima>=2.0.4

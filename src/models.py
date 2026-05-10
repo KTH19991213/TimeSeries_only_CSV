@@ -1,5 +1,6 @@
 import pandas as pd
 from sktime.forecasting.base import ForecastingHorizon
+from sktime.forecasting.arima import AutoARIMA
 from sktime.forecasting.naive import NaiveForecaster
 from sktime.forecasting.exp_smoothing import ExponentialSmoothing
 
@@ -36,15 +37,30 @@ def fit_and_predict(y_train: pd.Series, y_test: pd.Series, horizon: int) -> dict
         model3 = ExponentialSmoothing(trend="add", seasonal=None)
         p3 = _safe_fit_predict(model3, y_train, fh)
         if p3 is not None:
-            pred["exp_smoothing"] = p3
+            pred["holt"] = p3
     except Exception:
         pass
 
     try:
-        model4 = ExponentialSmoothing(trend="add", seasonal="add", sp=12)
+        seasonal_period = 12 if len(y_train) >= 24 else 2
+        model4 = ExponentialSmoothing(trend="add", seasonal="add", sp=seasonal_period)
         p4 = _safe_fit_predict(model4, y_train, fh)
         if p4 is not None:
-            pred["exp_smoothing_seasonal12"] = p4
+            pred["holt_winters"] = p4
+    except Exception:
+        pass
+
+    try:
+        model5 = AutoARIMA(
+            suppress_warnings=True,
+            stepwise=True,
+            error_action="ignore",
+            seasonal=True,
+            information_criterion="aic",
+        )
+        p5 = _safe_fit_predict(model5, y_train, fh)
+        if p5 is not None:
+            pred["auto_arima"] = p5
     except Exception:
         pass
 

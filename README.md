@@ -1,6 +1,3 @@
-# TimeSeries_only_CSV
-## 배포링크: https://timeseriesonlycsv-rskvusanmofjsnxgjvg2xc.streamlit.app/
-
 # Time Series Forecast Web App
 
 Upload a univariate CSV and run automatic forecasting with dashboard metrics.
@@ -17,6 +14,7 @@ Upload a univariate CSV and run automatic forecasting with dashboard metrics.
 - Re-forecast when file or parameters change
 - Model comparison dashboard
 - Metrics: MAE, RMSE, MAPE, SMAPE, MASE
+- Models: Naive, Holt, Holt-Winters, AutoARIMA
 
 ## Sample CSV files
 - sample_data/monthly_demand_sample.csv
